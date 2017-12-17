@@ -1,1 +1,1 @@
-docker stack deploy --with-registry-auth sonar
+docker stack deploy --with-registry-auth -c docker-compose.yml sonar
