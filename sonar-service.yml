@@ -1,4 +1,4 @@
-version: "3"
+version: "3.4"
 services:
   sonarqube:
     image: sonarqube
@@ -8,24 +8,23 @@ services:
      - SONARQUBE_JDBC_USERNAME=sonar
      - SONARQUBE_JDBC_PASSWORD=sonar
      - SONARQUBE_JDBC_URL=jdbc:mysql://db:3306/sonar?useUnicode=true&characterEncoding=utf8&rewriteBatchedStatements=true
-    link:
-     - db
-    restart: always
     networks:
      - sonar
   db:
-    image: mariadb
+    image: mysql/mysql-server
     volumes:
-     - data_volume: /var/lib/mysql
+     - data_volume:/var/lib/mysql
     command: --max_allowed_packet=256M
     environment:
      - MYSQL_ROOT_PASSWORD=sonar
      - MYSQL_DATABASE=sonar
      - MYSQL_USER=sonar
      - MYSQL_PASSWORD=sonar
-    restart: always
     networks:
      - sonar
-     
+
 volumes:
- - data_volume
+ data_volume:
+
+networks:
+ sonar:
