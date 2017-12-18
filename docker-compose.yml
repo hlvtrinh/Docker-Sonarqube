@@ -1,17 +1,5 @@
 version: "3.4"
 services:
-  sonarqube:
-    image: sonarqube
-    ports:
-     - "9000:9000"
-    environment:
-     - SONARQUBE_JDBC_USERNAME=sonar
-     - SONARQUBE_JDBC_PASSWORD=sonar
-     - SONARQUBE_JDBC_URL=jdbc:mysql://sonar_db:3306/sonar?useUnicode=true&characterEncoding=utf8&rewriteBatchedStatements=true
-    networks:
-     - sonar
-    command: -Dsonar.ce.javaOpts=-Xmx2048m
-  
   db:
     image: mysql/mysql-server
     volumes:
@@ -27,6 +15,18 @@ services:
         aliases:
          - sonar_db
 
+  sonarqube:
+    image: sonarqube
+    ports:
+     - "9000:9000"
+    environment:
+     - SONARQUBE_JDBC_USERNAME=sonar
+     - SONARQUBE_JDBC_PASSWORD=sonar
+     - SONARQUBE_JDBC_URL=jdbc:mysql://sonar_db:3306/sonar?useUnicode=true&characterEncoding=utf8&rewriteBatchedStatements=true
+    networks:
+     - sonar
+    command: -Dsonar.ce.javaOpts=-Xmx2048m
+  
 volumes:
  data_volume:
 
