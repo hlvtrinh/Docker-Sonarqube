@@ -1,6 +1,6 @@
 version: "3.4"
 services:
-  db:
+  sonar_db:
     image: mysql/mysql-server
     volumes:
      - data_volume:/var/lib/mysql
@@ -26,6 +26,9 @@ services:
     networks:
      - sonar
     command: -Dsonar.ce.javaOpts=-Xmx2048m
+    depends_on:
+     - sonar_db
+    
   
 volumes:
  data_volume:
