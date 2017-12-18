@@ -10,6 +10,7 @@ services:
      - SONARQUBE_JDBC_URL=jdbc:mysql://sonar_db:3306/sonar?useUnicode=true&characterEncoding=utf8&rewriteBatchedStatements=true
     networks:
      - sonar
+    command: -Dsonar.ce.javaOpts=-Xmx2048m
   
   db:
     image: mysql/mysql-server
