@@ -1,19 +1,19 @@
 version: "3.4"
 services:
-  sonardb:
-    image: mysql/mysql-server
-    volumes:
-     - data:/var/lib/mysql
-    command: --max_allowed_packet=256M
-    environment:
-     - MYSQL_ROOT_PASSWORD=sonar
-     - MYSQL_DATABASE=sonar
-     - MYSQL_USER=sonar
-     - MYSQL_PASSWORD=sonar
-    networks:
-      sonar:
-        aliases:
-         - sonardb
+#  sonardb:
+#    image: mysql/mysql-server
+#    volumes:
+#     - data:/var/lib/mysql
+#    command: --max_allowed_packet=256M
+#    environment:
+#     - MYSQL_ROOT_PASSWORD=sonar
+#     - MYSQL_DATABASE=sonar
+#     - MYSQL_USER=sonar
+#     - MYSQL_PASSWORD=sonar
+#    networks:
+#      sonar:
+#        aliases:
+#         - sonardb
 
   sonarqube:
     image: sonarqube
@@ -22,16 +22,16 @@ services:
     environment:
      - SONARQUBE_JDBC_USERNAME=sonar
      - SONARQUBE_JDBC_PASSWORD=sonar
-     - SONARQUBE_JDBC_URL=jdbc:mysql://sonardb:3306/sonar?useUnicode=true&characterEncoding=utf8&rewriteBatchedStatements=true
-    networks:
-     - sonar
+     - SONARQUBE_JDBC_URL=jdbc:mysql://192.168.167.244:3306/sonar?useUnicode=true&characterEncoding=utf8&rewriteBatchedStatements=true
     command: -Dsonar.ce.javaOpts=-Xmx2048m
-    depends_on:
-     - sonardb
+    #networks:
+    # - sonar
+    #depends_on:
+    # - sonardb
     
   
-volumes:
- data:
-
-networks:
- sonar:
+#volumes:
+# data:
+#
+#networks:
+# sonar:
