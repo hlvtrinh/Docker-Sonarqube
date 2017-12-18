@@ -7,9 +7,10 @@ services:
     environment:
      - SONARQUBE_JDBC_USERNAME=sonar
      - SONARQUBE_JDBC_PASSWORD=sonar
-     - SONARQUBE_JDBC_URL=jdbc:mysql://db:3306/sonar?useUnicode=true&characterEncoding=utf8&rewriteBatchedStatements=true
+     - SONARQUBE_JDBC_URL=jdbc:mysql://sonar_db:3306/sonar?useUnicode=true&characterEncoding=utf8&rewriteBatchedStatements=true
     networks:
      - sonar
+  
   db:
     image: mysql/mysql-server
     volumes:
@@ -21,7 +22,9 @@ services:
      - MYSQL_USER=sonar
      - MYSQL_PASSWORD=sonar
     networks:
-     - sonar
+      sonar:
+        aliases:
+         - sonar_db
 
 volumes:
  data_volume:
