@@ -1,37 +1,49 @@
 version: "3.4"
 services:
-#  sonardb:
-#    image: mysql/mysql-server
-#    volumes:
-#     - data:/var/lib/mysql
-#    command: --max_allowed_packet=256M
-#    environment:
-#     - MYSQL_ROOT_PASSWORD=sonar
-#     - MYSQL_DATABASE=sonar
-#     - MYSQL_USER=sonar
-#     - MYSQL_PASSWORD=sonar
-#    networks:
-#      sonar:
-#        aliases:
-#         - sonardb
+  sonardb:
+    image: mysql/mysql-server
+    volumes:
+     - mysql_db:/var/lib/mysql
+    command: --max_allowed_packet=256M
+    environment:
+     - MYSQL_ROOT_PASSWORD=sonar
+     - MYSQL_DATABASE=sonar
+     - MYSQL_USER=sonar
+     - MYSQL_PASSWORD=sonar
+    networks:
+      sonar:
+        aliases:
+         - sonardb
 
   sonarqube:
     image: sonarqube
     ports:
-     - "9000:9000"
+     - "80:9000"
     environment:
      - SONARQUBE_JDBC_USERNAME=sonar
      - SONARQUBE_JDBC_PASSWORD=sonar
-     - SONARQUBE_JDBC_URL=jdbc:mysql://192.168.167.244:3306/sonar?useUnicode=true&characterEncoding=utf8&rewriteBatchedStatements=true
-    command: -Dsonar.ce.javaOpts=-Xmx2048m
-    #networks:
-    # - sonar
-    #depends_on:
-    # - sonardb
+     - SONARQUBE_JDBC_URL=jdbc:mysql://sonardb:3306/sonar?useUnicode=true&characterEncoding=utf8&rewriteBatchedStatements=true&useConfigs=maxPerformance
+    command: 
+     #Heap size
+     - '-Dsonar.ce.javaOpts=-Xmx2048m'
+     
+    volumes:
+     - sonar_conf:/opt/sonarqube/conf
+     - sonar_data:/opt/sonarqube/data
+     - sonar_ext:/opt/sonarqube/extensions
+    networks:
+      sonar:
+        aliases:
+         - sonarqube
+    depends_on:
+     - sonardb
     
+networks:
+  sonar:
+
+volumes:
+  mysql_db:
+  sonar_conf:
+  sonar_data:
+  sonar_ext:
   
-#volumes:
-# data:
-#
-#networks:
-# sonar:

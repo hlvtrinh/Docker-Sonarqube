@@ -1,1 +1,0 @@
-docker run -it --rm --name mysql-server -p 3306:3306 -v /var/lib/mysql:/var/lib/mysql -e MYSQL_DATABASE=sonar -e MYSQL_ROOT_PASSWORD=sonar -e MYSQL_USER=sonar -e MYSQL_PASSWORD=sonar mysql/mysql-server --max_allowed_packet=256M
