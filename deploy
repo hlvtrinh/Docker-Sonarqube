@@ -1,4 +1,13 @@
+#!/bin/bash
+
+#Pull all required images
 docker pull sonarqube
 docker pull mysql/mysql-server
 
+#Deploy the stack
 docker stack deploy --with-registry-auth -c docker-compose.yml sonar
+
+#Allow access through firewall
+firewall-cmd --permanent --add-service http
+firewall-cmd --permanent --add-service https
+firewall-cmd --reload
