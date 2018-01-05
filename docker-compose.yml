@@ -19,13 +19,14 @@ services:
     image: sonarqube
     ports:
      - "80:9000"
+     - "1099:1099"
     environment:
      - SONARQUBE_JDBC_USERNAME=sonar
      - SONARQUBE_JDBC_PASSWORD=sonar
      - SONARQUBE_JDBC_URL=jdbc:mysql://sonardb:3306/sonar?useUnicode=true&characterEncoding=utf8&rewriteBatchedStatements=true&useConfigs=maxPerformance
     command: 
      #Heap size
-     - '-Dsonar.ce.javaOpts=-Xmx2048m'
+     - '-Dsonar.ce.javaOpts=-Xmx1024m'
      
     volumes:
      - sonar_conf:/opt/sonarqube/conf
